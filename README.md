@@ -44,9 +44,14 @@ dynamic content (callbacks, etc.)
   methods that directly return a DOM fragment (rather than a string or an output
   spec array) are not supported.
 
+- ProseMirror `toDOM` methods that specify an event handler in their attributes (like
+  [`onclick`](https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onclick))
+  will need a `toReact` method, since DOM event handlers are written as string
+  expressions but React handlers are passed directly as functions.
+
 - Adjacent nodes with identical marks are also not currently merged as in DOMSerializer,
-  so the React representation of a document may not be unique (a property offered by ProseMirror
-  core.) PRs welcome!
+  so the React representation of a document may not be unique (which is a property
+  offered by ProseMirror core.) PRs welcome!
 
 
 ## Known Issues
