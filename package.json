@@ -1,0 +1,25 @@
+{
+  "name": "prosemirror-react-renderer",
+  "version": "0.1.0",
+  "description": "A serializer that converts ProseMirror fragments into React elements",
+  "main": "dist/index.js",
+  "scripts": {
+    "watch": "tsc -w",
+    "test": "tsc --no-emit && node ./test/index.js"
+  },
+  "author": "Technologies Peerio Inc. <support@peerio.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/prosemirror-model": "^0.24.0",
+    "@types/react": "^16.0.10",
+    "@types/react-dom": "^16.0.1",
+    "prosemirror-model": "^1.0.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "tslint": "^5.7.0",
+    "typescript": "^2.5.3"
+  },
+  "peerDependencies": {
+    "react": ">=16.0.0"
+  }
+}
