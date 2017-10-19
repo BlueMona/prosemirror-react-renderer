@@ -78,7 +78,9 @@ function elementFromDOMSpec(spec, children, didRenderContent) {
         // array as its children parameter, but in some circumstances this seems
         // to make react-dom@16's renderToString freak out with a very unhelpful
         // error message, so we need to pass undefined.
-        elem: React.createElement(spec[0], props, innerContent.length > 0 ? innerContent : undefined),
+        elem: React.createElement(spec[0], props, innerContent.length > 0 ?
+            innerContent.map(function (e, i) { return React.createElement((function () { return e; }), { key: i }); }) :
+            undefined),
         didRenderContent: didRenderContent
     };
 }
@@ -180,7 +182,7 @@ function makeReactRenderer(schema, componentName) {
         // HACK: ProseMirror typings don't expose Fragment.contents
         return fragment.content.map(function (node, i) {
             var renderedContent = nodeSpecs[node.type.name](node, renderFragment(__assign({ fragment: node.content }, passthroughProps)), passthroughProps);
-            return renderMarks(node, renderedContent, passthroughProps);
+            return React.createElement(function () { return renderMarks(node, renderedContent, passthroughProps); }, { key: i });
         }); // HACK: SFC typings don't let us return element arrays yet
     }
     renderFragment.displayName = componentName || 'ReactRenderer';

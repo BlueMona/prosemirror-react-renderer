@@ -124,7 +124,13 @@ function elementFromDOMSpec(spec : OutputSpec, children? : React.ReactNode, didR
         // array as its children parameter, but in some circumstances this seems
         // to make react-dom@16's renderToString freak out with a very unhelpful
         // error message, so we need to pass undefined.
-        elem: React.createElement(spec[0], props, innerContent.length > 0 ? innerContent : undefined),
+        elem: React.createElement(
+            spec[0],
+            props,
+            innerContent.length > 0 ?
+                innerContent.map((e, i) => React.createElement((() => e) as any, { key: i })) :
+                undefined
+            ),
         didRenderContent
     }
 }
@@ -248,7 +254,7 @@ export function makeReactRenderer<TProps = {}>(schema : Schema, componentName? :
                 renderFragment({ fragment: node.content, ...passthroughProps }),
                 passthroughProps
             )
-            return renderMarks(node, renderedContent, passthroughProps)
+            return React.createElement(() => renderMarks(node, renderedContent, passthroughProps), { key: i })
         }) as any // HACK: SFC typings don't let us return element arrays yet
     }
 

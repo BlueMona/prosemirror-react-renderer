@@ -21,14 +21,14 @@ const mySchema = new Schema({
     marks: schema.spec.marks
 })
 
-window.view = new EditorView(document.querySelector('#editor'), {
+const view = new EditorView(document.querySelector('#editor'), {
     state: EditorState.create({
         doc: DOMParser.fromSchema(mySchema).parse(document.querySelector('#content')),
         plugins: exampleSetup({ schema: mySchema })
     }),
     dispatchTransaction(transaction) {
-        const newState = window.view.state.apply(transaction)
-        window.view.updateState(newState)
+        const newState = view.state.apply(transaction)
+        view.updateState(newState)
         ReactDOM.render(<App fragment={newState.doc.content} />, reactRoot)
     }
 })
@@ -50,4 +50,4 @@ class App extends React.Component {
     }
 }
 
-ReactDOM.render(<App fragment={window.view.state.doc.content} />, reactRoot)
+ReactDOM.render(<App fragment={view.state.doc.content} />, reactRoot)
